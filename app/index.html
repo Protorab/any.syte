@@ -1,11 +1,81 @@
 <!-- @format -->
-<!--#include virtual="/includes/_header.html" -->
+<!DOCTYPE html>
+<html lang="">
+  <!--#include virtual="/includes/_head.html" -->
 
-<main class="main" role="main">
-  <section class="section">
-    <div class="wrapper">
-      <h1>main</h1>
-    </div>
-  </section>
-</main>
-<!--#include virtual="/includes/_footer.html" -->
+  <body>
+    <!--#include virtual="/includes/_header.html" -->
+
+    <main class="main" role="main">
+      <div class="lines">
+
+      </div>
+      <div class="noise"></div>
+      <section id="top__section" class="section scroll__section top__section">
+        <div class="section__bg top__bg">
+          <div class="video__bg">
+            <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop"
+              data-swiper-parallax-scale="1.8" data-swiper-parallax="50%">
+              <source src="assets/video/top__bg.mp4" type="video/mp4" alt="Видео" />
+            </video>
+          </div>
+
+        </div>
+        <div class="wrapper top__wrapper">
+          <h1 class="title">Any Site</h1>
+        </div>
+      </section>
+      <section id="project__section" class="section scroll__section project__section">
+        <div class="section__bg paralax__bg"></div>
+        <div class="wrapper">
+          <div class="title">Проекты</div>
+        </div>
+        <div class="wrapper">
+          <!--#include virtual="/includes/_project.html" -->
+        </div>
+      </section>
+      <section id="services__section" class="section scroll__section services__section">
+
+
+        <div class="wrapper">
+          <div class="title">Услуги</div>
+        </div>
+
+        <div class="section">
+          <div class="section__bg paralax__bg"></div>
+          <div class="wrapper">
+            <!--#include virtual="/includes/_rates.html" -->
+
+          </div>
+        </div>
+      </section>
+      <section id="stage__section" class="section scroll__section stage__section">
+        <div class="wrapper">
+          <div class="title">Этапы</div>
+        </div>
+
+        <div class="section">
+          <div class="section__bg paralax__bg"></div>
+          <div class="wrapper">
+
+            <!--#include virtual="/includes/_stages.html" -->
+          </div>
+        </div>
+      </section>
+      <section id="contacts__section" class="section scroll__section contacts__section">
+        <!-- <div class="section__bg">
+          <div class="video__bg">
+            <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop"
+              data-swiper-parallax-scale="1.8" data-swiper-parallax="50%">
+              <source src="assets/video/contacts.mp4" type="video/mp4" alt="Видео" />
+            </video>
+          </div>
+        </div> -->
+        <div class="wrapper">
+          <div class="title">Наши контакты</div>
+      </section>
+    </main>
+    <!--#include virtual="/includes/_footer.html" -->
+  </body>
+
+</html>

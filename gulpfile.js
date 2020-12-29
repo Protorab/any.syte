@@ -140,11 +140,13 @@ function images() {
     .pipe(dest(path.build.img))
     .pipe(browserSync.stream());
 }
+
 function assets() {
   return src(path.src.assets)
     .pipe(dest(path.build.assets))
     .pipe(browserSync.stream());
 }
+
 function pugFunc() {
   return src(path.src.pug)
     .pipe(
@@ -155,15 +157,24 @@ function pugFunc() {
     .pipe(dest(path.build.html))
     .pipe(browserSync.stream());
 }
+
 function html() {
   return src(path.src.html)
     .pipe(fileInclude())
     .pipe(dest(path.build.html))
     .pipe(browserSync.stream());
 }
+
+function buildhtml() {
+  let includes = new ssi(appFolder + "/", distFolder + "/", "/**/*.html");
+  includes.compile();
+  return src(path.src.html).pipe(browserSync.stream());
+}
+
 function cleanimg() {
   return del("app/img/dest/**/*", { force: true });
 }
+
 function fonts() {
   return src(path.src.fonts)
     .pipe(ttf2woff())
@@ -189,24 +200,24 @@ function deploy() {
     })
   );
 }
-async function buildhtml() {
-  let includes = new ssi(appFolder + "/", distFolder + "/", "/**/*.html");
-  includes.compile();
-  del("dist/parts", { force: true });
-}
+
 function startwatch() {
   watch([path.watch.css], styles);
   watch([path.watch.js], scripts);
   watch([path.watch.img], images);
-  watch([path.watch.html], html);
+  // watch([path.watch.html], html);
+  watch([path.watch.html], buildhtml);
+
   watch([path.watch.assets], assets);
   watch([path.watch.pug], pugFunc);
 
   // watch([path.watch], { usePolling: true }).on("change", browserSync.reload);
 }
+
 function clean() {
   return del(path.clean);
 }
+
 // exports.assets = series(clean, scripts, images, html);
 exports.scripts = scripts;
 exports.styles = styles;

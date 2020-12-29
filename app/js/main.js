@@ -1,62 +1,78 @@
 /** @format */
 
-import $ from "jquery";
-import wow from "wowjs";
+// import $ from "jquery";
+// import wow from "wowjs";
+import Swiper from "./vendor/swiper-bundle.min.js";
+
 import inputmask from "inputmask";
 import loadingAttributePolyfill from "loading-attribute-polyfill";
-const WOW = require("wowjs");
-window.wow = new wow.WOW();
-window.wow.init();
-window.jQuery = $;
-window.$ = $;
-require("./vendor/mail.js");
+// const WOW = require("wowjs");
+// window.wow = new wow.WOW();
+// window.wow.init();
+// window.jQuery = $;
+// window.$ = $;
+// require("./vendor/mail.js");
 
 // import module example (npm i -D jquery)
 
 document.addEventListener("DOMContentLoaded", () => {
+  const showMore = document.querySelectorAll(".show__more");
+  const popupRates = document.querySelector(".popup__rates");
+  const ratesMore = document.querySelector(".popup__more");
+  const ratesDevelopment = document.querySelector("#development__text");
+  const ratesAdvancing = document.querySelector("#advancing__text");
+  const ratesTitle = document.querySelector("#more__title");
+  const ratesDay = document.querySelector("#more__day");
+  const ratesPrice = document.querySelector("#more__price");
+  const ratesIcon = document.querySelector("#more__icon");
+  const ratesList = document.querySelector("#rates__list");
+  const ratesOrder = document.querySelector("#rates__order");
+  let moreDevelopment,
+    moreAdvancing,
+    moreList,
+    moreTitle,
+    morePrice,
+    moreIcon,
+    moreDay;
+
+  const popupProject = document.querySelector(".popup__project");
+  const projectPreview = document.querySelector(".project__preview");
+  const projectPreviewImg = document.querySelector("#project__img");
+  const showProject = document.querySelectorAll(".show__project");
+
   const phone = document.querySelector(".telephone");
+
   const popupForm = document.querySelector("#popup__form");
   const formPopup = document.querySelector(".form__popup");
-  const popupBg = document.querySelectorAll(".popup__overlay");
   const showForm = document.querySelectorAll(".show__form");
+
+  const popupBg = document.querySelectorAll(".popup__overlay");
   const closePopup = document.querySelectorAll(".close");
+
   const burgerMenu = document.querySelector(".burger__menu");
+
+  const main = document.querySelector(".main");
+  const topSection = document.querySelector(".top__section");
+  const topSectionHeight = document.querySelector(".top__section").offsetHeight;
+  const header = document.querySelector(".header");
+
   const menu = document.querySelector(".menu");
   const body = document.querySelector("body");
+
+  const scrollLink = document.querySelectorAll(".menu__item");
+  const section = document.querySelectorAll(".section");
+  const sections = {};
+
   let phoneMask = new inputmask({
     mask: "+375-99-999-99-99",
     clearIncomplete: true,
     greedy: false,
   });
   phoneMask.mask(phone);
-  function classRemove(element, removeClass) {
-    const elementClass = document.querySelector("" + element + "");
-    if (elementClass) {
-      elementClass.classList.remove(removeClass);
-    }
-  }
-  window.addEventListener("scroll", function () {
-    classRemove(".burger__menu.__clicked", "__clicked");
-    classRemove(".menu.__show", "__show");
-  });
-  showForm.forEach(function (btn) {
-    btn.addEventListener("click", function (e) {
-      const subject = this.dataset.subject;
-      console.log(subject);
-      e.preventDefault();
-      popupToggle(
-        popupForm,
-        formPopup,
-        "animate__fadeIn",
-        "animate__bounceInDown",
-        "animate__fadeOut",
-        "animate__bounceOutUp",
-        "flex",
-        100
-      );
-    });
-    return false;
-  });
+
+  topSection.style.minHeight = topSectionHeight - header.offsetHeight + "px";
+
+  main.style.paddingTop = header.offsetHeight + "px";
   function popupToggle(
     popUp,
     popUpElement,
@@ -77,8 +93,102 @@ document.addEventListener("DOMContentLoaded", () => {
     }, timing);
   }
 
+  function classRemove(element, removeClass) {
+    const elementClass = document.querySelector("" + element + "");
+    if (elementClass) {
+      elementClass.classList.remove(removeClass);
+    }
+  }
+  window.addEventListener("scroll", function () {
+    classRemove(".burger__menu.__clicked", "__clicked");
+    classRemove(".menu.__show", "__show");
+  });
+  if (showForm) {
+    showForm.forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        const subject = this.dataset.subject;
+        console.log(subject);
+        e.preventDefault();
+        popupToggle(
+          popupForm,
+          formPopup,
+          "animate__fadeIn",
+          "animate__bounceInDown",
+          "animate__fadeOut",
+          "animate__bounceOutUp",
+          "flex",
+          100
+        );
+      });
+      return false;
+    });
+  }
+  if (showProject) {
+    showProject.forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        let preview = this.dataset.preview;
+        projectPreviewImg.src = preview;
+        popupToggle(
+          popupProject,
+          projectPreview,
+          "animate__fadeIn",
+          "animate__bounceInDown",
+          "animate__fadeOut",
+          "animate__bounceOutUp",
+          "flex",
+          100
+        );
+      });
+    });
+  }
+  if (showMore) {
+    showMore.forEach(function (btn) {
+      btn.addEventListener("click", function (e) {
+        moreIcon = this.dataset.icon;
+        moreDay = this.dataset.day;
+        moreDevelopment = this.parentElement.parentElement.querySelector(
+          ".more__development"
+        );
+        morePrice = this.parentElement.parentElement.parentElement.querySelector(
+          ".rates__item-price h4"
+        );
+        moreTitle = this.parentElement.parentElement.parentElement.querySelector(
+          ".rates__item-title h4"
+        );
+        moreAdvancing = this.parentElement.parentElement.querySelector(
+          ".more__advancing"
+        );
+        moreList = this.parentElement.parentElement.querySelector(
+          ".rates__item-short__info"
+        );
+        ratesOrder.dataset.subject = "Хочу заказать " + moreTitle.textContent;
+        ratesIcon.src = moreIcon;
+        ratesDay.innerHTML = moreDay;
+        ratesList.innerHTML = moreList.innerHTML;
+        ratesTitle.innerHTML = moreTitle.textContent;
+        ratesPrice.innerHTML = morePrice.textContent;
+        ratesDevelopment.innerHTML = moreDevelopment.innerHTML;
+        ratesAdvancing.innerHTML = moreAdvancing.innerHTML;
+
+        popupToggle(
+          popupRates,
+          ratesMore,
+          "animate__fadeIn",
+          "animate__bounceInDown",
+          "animate__fadeOut",
+          "animate__bounceOutUp",
+          "flex",
+          100
+        );
+        e.preventDefault();
+      });
+    });
+  }
+
   function popupClose() {
     if (window.getComputedStyle(popupForm).display === "flex") {
+      // popupHide(popupForm, formPopup);
       popupToggle(
         popupForm,
         formPopup,
@@ -89,24 +199,124 @@ document.addEventListener("DOMContentLoaded", () => {
         "none",
         1000
       );
-      return false;
+    }
+    if (window.getComputedStyle(popupProject).display === "flex") {
+      // popupHide(popupProject, projectPreview);
+      popupToggle(
+        popupProject,
+        projectPreview,
+        "animate__fadeOut",
+        "animate__bounceOutUp",
+        "animate__fadeIn",
+        "animate__bounceInDown",
+        "none",
+        1000
+      );
+    }
+    if (window.getComputedStyle(popupRates).display === "flex") {
+      // popupHide(popupRates, ratesMore);
+      popupToggle(
+        popupRates,
+        ratesMore,
+        "animate__fadeOut",
+        "animate__bounceOutUp",
+        "animate__fadeIn",
+        "animate__bounceInDown",
+        "none",
+        1000
+      );
     }
   }
-  popupBg.forEach(function (closeBtn) {
-    closeBtn.addEventListener("click", function (e) {
-      e.preventDefault();
-      popupClose();
+  if (popupBg) {
+    popupBg.forEach(function (closeBtn) {
+      closeBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        popupClose();
+      });
     });
-  });
-  closePopup.forEach(function (close) {
-    close.addEventListener("click", function (e) {
-      popupClose();
-      e.preventDefault();
+  }
+  if (closePopup) {
+    closePopup.forEach(function (close) {
+      close.addEventListener("click", function (e) {
+        popupClose();
+        e.preventDefault();
+      });
     });
-  });
+  }
+
   document.addEventListener("keydown", function (event) {
     if (event.keyCode === 27) {
       popupClose();
     }
+  });
+
+  let identCounter = 0;
+  if (scrollLink) {
+    scrollLink.forEach((item) => {
+      item.addEventListener("click", (e) => {
+        let targetBlock = document.querySelector(e.target.hash);
+        e.preventDefault();
+        window.scrollTo({
+          top: targetBlock.offsetTop,
+          behavior: "smooth",
+        });
+      });
+    });
+  }
+
+  Array.prototype.forEach.call(section, (e) => {
+    sections[e.id] = e.offsetTop;
+  });
+
+  window.onscroll = () => {
+    let scrollPosition =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    scrollPosition += scrollPosition / 4;
+    for (identCounter in sections) {
+      if (sections[identCounter] <= scrollPosition) {
+        document.querySelector(".active").classList.remove("active");
+        document
+          .querySelector("a[href*=" + identCounter + "]")
+          .classList.add("active");
+      }
+    }
+  };
+
+  const projectHorisontal = new Swiper(".project", {
+    effect: "cube",
+    rtl: true,
+    cubeEffect: {
+      shadow: true,
+      slideShadows: true,
+      shadowOffset: 20,
+      shadowScale: 0.94,
+    },
+    // direction: "vertical",
+    speed: 800,
+    // spaceBetween: 100,
+    loop: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+    },
+  });
+
+  const projectVertical = new Swiper(".project__vertical", {
+    effect: "cube",
+
+    cubeEffect: {
+      shadow: true,
+      slideShadows: true,
+      shadowOffset: 20,
+      shadowScale: 0.94,
+    },
+    direction: "vertical",
+    speed: 800,
+    // spaceBetween: 100,
+    loop: true,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false,
+    },
   });
 });

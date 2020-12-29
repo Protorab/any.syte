@@ -3,7 +3,6 @@
 // import $ from "jquery";
 // import wow from "wowjs";
 import Swiper from "./vendor/swiper-bundle.min.js";
-
 import inputmask from "inputmask";
 import loadingAttributePolyfill from "loading-attribute-polyfill";
 // const WOW = require("wowjs");
@@ -52,8 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const burgerMenu = document.querySelector(".burger__menu");
 
   const main = document.querySelector(".main");
-  const topSection = document.querySelector(".top__section");
-  const topSectionHeight = document.querySelector(".top__section").offsetHeight;
+  // const topSection = document.querySelector(".top__section");
+  // const topSectionHeight = document.querySelector(".top__section").offsetHeight;
   const header = document.querySelector(".header");
 
   const menu = document.querySelector(".menu");
@@ -63,6 +62,61 @@ document.addEventListener("DOMContentLoaded", () => {
   const section = document.querySelectorAll(".section");
   const sections = {};
 
+  const animItems = document.querySelectorAll(".__animate");
+
+  for (let anchor of scrollLink) {
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      const blockID = anchor.getAttribute("href").substr(1);
+
+      document.getElementById(blockID).scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }
+
+  if (animItems.length > 0) {
+    window.addEventListener("scroll", animOnScrol);
+    function animOnScrol() {
+      for (let i = 0; i < animItems.length; i++) {
+        const animItem = animItems[i];
+        const animItemHeight = animItem.offsetHeight;
+        const animItemOffset = offset(animItem).top;
+        const animItemStart = 10;
+
+        let animItemPoint = window.innerHeight - animItemHeight / animItemStart;
+        if (animItemHeight >= window.innerHeight) {
+          animItemPoint =
+            window.innerHeight - window.innerHeight / animItemStart;
+        }
+        if (
+          pageYOffset > animItemOffset - animItemPoint &&
+          pageYOffset < animItemOffset + animItemHeight
+        ) {
+          animItem.classList.add("_active");
+        } else {
+          if (!animItem.classList.contains("__animated")) {
+            animItem.classList.remove("_active");
+          }
+        }
+      }
+    }
+    setTimeout(() => {
+      animOnScrol();
+    }, 800);
+  }
+
+  function offset(el) {
+    const rect = el.getBoundingClientRect(),
+      scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+      scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    return {
+      top: rect.top + scrollTop,
+      left: rect.left + scrollLeft,
+    };
+  }
   let phoneMask = new inputmask({
     mask: "+375-99-999-99-99",
     clearIncomplete: true,
@@ -70,9 +124,9 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   phoneMask.mask(phone);
 
-  topSection.style.minHeight = topSectionHeight - header.offsetHeight + "px";
+  // topSection.style.minHeight = topSectionHeight - header.offsetHeight + "px";
 
-  main.style.paddingTop = header.offsetHeight + "px";
+  main.style.marginTop = -(header.offsetHeight + "px");
   function popupToggle(
     popUp,
     popUpElement,

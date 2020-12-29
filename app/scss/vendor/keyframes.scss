@@ -290,3 +290,13 @@
     background-position: 420px 0;
   }
 }
+
+@-webkit-keyframes slideUp {
+  from {
+    top: -100%;
+  }
+
+  to {
+    top: 0%;
+  }
+}

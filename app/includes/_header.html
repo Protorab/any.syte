@@ -2,6 +2,9 @@
 
 <header class="header __animate">
   <div class="wrapper header__wrapper __animate">
+    <a href="#" class="logo __animate">
+      <img src="img/favicon.png" alt="" />
+    </a>
     <nav class="menu" id="menu">
       <a data-id="top__section" class="menu__item active" href="#top__section">
         Главная
@@ -26,13 +29,31 @@
       >
         Контакты
       </a>
+      <div class="contacts__link header__links mobile">
+        <a href="tel:+375123456789">+375123456789</a>
+        <a href="mailto:email@gmail.com">email@gmail.com</a>
+      </div>
+      <a
+        href="#"
+        data-subject="Хочу сделать заказ"
+        class="btn btn-header__btn show__form mobile"
+      >
+        Заказть
+      </a>
     </nav>
-    <div class="contacts__link header__links">
+    <div class="contacts__link header__links desktop">
       <a href="tel:+375123456789">+375123456789</a>
       <a href="mailto:email@gmail.com">email@gmail.com</a>
     </div>
-    <a href="#" data-subject="header-btn" class="btn btn-rec__btn show__form"
-      >Заказть</a
+    <a
+      href="#"
+      data-subject="Хочу сделать заказ"
+      class="btn btn-header__btn show__form desktop"
     >
+      Заказть
+    </a>
+    <div class="burger__menu">
+      <span></span>
+    </div>
   </div>
 </header>

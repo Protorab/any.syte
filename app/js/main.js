@@ -55,6 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // const topSectionHeight = document.querySelector(".top__section").offsetHeight;
   const header = document.querySelector(".header");
 
+  const project = document.querySelector(".project");
+
   const menu = document.querySelector(".menu");
   const body = document.querySelector("body");
 
@@ -76,7 +78,14 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
-
+  if (burgerMenu) {
+    burgerMenu.addEventListener("click", function (e) {
+      this.classList.toggle("__clicked");
+      menu.classList.toggle("__show");
+      e.preventDefault;
+    });
+  }
+  
   if (animItems.length > 0) {
     window.addEventListener("scroll", animOnScrol);
     function animOnScrol() {

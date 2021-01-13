@@ -26,13 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const ratesIcon = document.querySelector("#more__icon");
   const ratesList = document.querySelector("#rates__list");
   const ratesOrder = document.querySelector("#rates__order");
-  let moreDevelopment,
-    moreAdvancing,
-    moreList,
-    moreTitle,
-    morePrice,
-    moreIcon,
-    moreDay;
 
   const popupProject = document.querySelector(".popup__project");
   const projectPreview = document.querySelector(".project__preview");
@@ -51,8 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const burgerMenu = document.querySelector(".burger__menu");
 
   const main = document.querySelector(".main");
-  // const topSection = document.querySelector(".top__section");
-  // const topSectionHeight = document.querySelector(".top__section").offsetHeight;
+
   const header = document.querySelector(".header");
 
   const project = document.querySelector(".project");
@@ -65,6 +57,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const sections = {};
 
   const animItems = document.querySelectorAll(".__animate");
+
+  let moreDevelopment;
+  let moreAdvancing;
+  let moreList;
+  let moreTitle;
+  let morePrice;
+  let moreIcon;
+  let moreDay;
 
   for (let anchor of scrollLink) {
     anchor.addEventListener("click", function (e) {
@@ -85,10 +85,11 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault;
     });
   }
-  
+
   if (animItems.length > 0) {
-    window.addEventListener("scroll", animOnScrol);
-    function animOnScrol() {
+    window.addEventListener("scroll", animOnScroll);
+
+    function animOnScroll() {
       for (let i = 0; i < animItems.length; i++) {
         const animItem = animItems[i];
         const animItemHeight = animItem.offsetHeight;
@@ -113,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
     setTimeout(() => {
-      animOnScrol();
+      animOnScroll();
     }, 800);
   }
 
@@ -126,26 +127,30 @@ document.addEventListener("DOMContentLoaded", () => {
       left: rect.left + scrollLeft,
     };
   }
+
   let phoneMask = new inputmask({
     mask: "+375-99-999-99-99",
     clearIncomplete: true,
     greedy: false,
   });
-  phoneMask.mask(phone);
+  if (phone) {
+    phoneMask.mask(phone);
+  }
 
   // topSection.style.minHeight = topSectionHeight - header.offsetHeight + "px";
 
   main.style.marginTop = -(header.offsetHeight + "px");
-  function popupToggle(
+
+  const popupToggle = (
     popUp,
     popUpElement,
-    el1ShowClassAdd,
-    el2ShowClassAdd,
-    el1HideClassRemove,
-    el2HideClassRemove,
     state,
-    timing
-  ) {
+    timing,
+    el1ShowClassAdd = "animate__fadeIn",
+    el2ShowClassAdd = "animate__bounceInDown",
+    el1HideClassRemove = "animate__fadeOut",
+    el2HideClassRemove = "animate__bounceOutUp"
+  ) => {
     popUp.classList.add(el1ShowClassAdd);
     popUp.classList.remove(el1HideClassRemove);
     popUpElement.classList.remove(el2HideClassRemove);
@@ -154,14 +159,14 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(function FormFadeIn() {
       popUp.style.display = state;
     }, timing);
-  }
+  };
 
-  function classRemove(element, removeClass) {
+  const classRemove = (element, removeClass) => {
     const elementClass = document.querySelector("" + element + "");
     if (elementClass) {
       elementClass.classList.remove(removeClass);
     }
-  }
+  };
   window.addEventListener("scroll", function () {
     classRemove(".burger__menu.__clicked", "__clicked");
     classRemove(".menu.__show", "__show");
@@ -172,16 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const subject = this.dataset.subject;
         console.log(subject);
         e.preventDefault();
-        popupToggle(
-          popupForm,
-          formPopup,
-          "animate__fadeIn",
-          "animate__bounceInDown",
-          "animate__fadeOut",
-          "animate__bounceOutUp",
-          "flex",
-          100
-        );
+        popupToggle(popupForm, formPopup, "flex", 100);
       });
       return false;
     });
@@ -192,16 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         let preview = this.dataset.preview;
         projectPreviewImg.src = preview;
-        popupToggle(
-          popupProject,
-          projectPreview,
-          "animate__fadeIn",
-          "animate__bounceInDown",
-          "animate__fadeOut",
-          "animate__bounceOutUp",
-          "flex",
-          100
-        );
+        popupToggle(popupProject, projectPreview, "flex", 100);
       });
     });
   }
@@ -234,33 +221,24 @@ document.addEventListener("DOMContentLoaded", () => {
         ratesDevelopment.innerHTML = moreDevelopment.innerHTML;
         ratesAdvancing.innerHTML = moreAdvancing.innerHTML;
 
-        popupToggle(
-          popupRates,
-          ratesMore,
-          "animate__fadeIn",
-          "animate__bounceInDown",
-          "animate__fadeOut",
-          "animate__bounceOutUp",
-          "flex",
-          100
-        );
+        popupToggle(popupRates, ratesMore, "flex", 100);
         e.preventDefault();
       });
     });
   }
 
-  function popupClose() {
+  const popupClose = () => {
     if (window.getComputedStyle(popupForm).display === "flex") {
       // popupHide(popupForm, formPopup);
       popupToggle(
         popupForm,
         formPopup,
+        "none",
+        1000,
         "animate__fadeOut",
         "animate__bounceOutUp",
         "animate__fadeIn",
-        "animate__bounceInDown",
-        "none",
-        1000
+        "animate__bounceInDown"
       );
     }
     if (window.getComputedStyle(popupProject).display === "flex") {
@@ -268,12 +246,12 @@ document.addEventListener("DOMContentLoaded", () => {
       popupToggle(
         popupProject,
         projectPreview,
+        "none",
+        1000,
         "animate__fadeOut",
         "animate__bounceOutUp",
         "animate__fadeIn",
-        "animate__bounceInDown",
-        "none",
-        1000
+        "animate__bounceInDown"
       );
     }
     if (window.getComputedStyle(popupRates).display === "flex") {
@@ -281,15 +259,15 @@ document.addEventListener("DOMContentLoaded", () => {
       popupToggle(
         popupRates,
         ratesMore,
+        "none",
+        1000,
         "animate__fadeOut",
         "animate__bounceOutUp",
         "animate__fadeIn",
-        "animate__bounceInDown",
-        "none",
-        1000
+        "animate__bounceInDown"
       );
     }
-  }
+  };
   if (popupBg) {
     popupBg.forEach(function (closeBtn) {
       closeBtn.addEventListener("click", function (e) {

@@ -133,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
     clearIncomplete: true,
     greedy: false,
   });
+
   if (phone) {
     phoneMask.mask(phone);
   }
@@ -167,10 +168,12 @@ document.addEventListener("DOMContentLoaded", () => {
       elementClass.classList.remove(removeClass);
     }
   };
+
   window.addEventListener("scroll", function () {
     classRemove(".burger__menu.__clicked", "__clicked");
     classRemove(".menu.__show", "__show");
   });
+
   if (showForm) {
     showForm.forEach(function (btn) {
       btn.addEventListener("click", function (e) {
@@ -182,6 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return false;
     });
   }
+
   if (showProject) {
     showProject.forEach(function (btn) {
       btn.addEventListener("click", function (e) {
@@ -192,6 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
   if (showMore) {
     showMore.forEach(function (btn) {
       btn.addEventListener("click", function (e) {
@@ -241,6 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "animate__bounceInDown"
       );
     }
+
     if (window.getComputedStyle(popupProject).display === "flex") {
       // popupHide(popupProject, projectPreview);
       popupToggle(
@@ -254,6 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "animate__bounceInDown"
       );
     }
+
     if (window.getComputedStyle(popupRates).display === "flex") {
       // popupHide(popupRates, ratesMore);
       popupToggle(
@@ -268,6 +275,7 @@ document.addEventListener("DOMContentLoaded", () => {
       );
     }
   };
+
   if (popupBg) {
     popupBg.forEach(function (closeBtn) {
       closeBtn.addEventListener("click", function (e) {
@@ -276,6 +284,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
+
   if (closePopup) {
     closePopup.forEach(function (close) {
       close.addEventListener("click", function (e) {
@@ -292,6 +301,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   let identCounter = 0;
+  
   if (scrollLink) {
     scrollLink.forEach((item) => {
       item.addEventListener("click", (e) => {
